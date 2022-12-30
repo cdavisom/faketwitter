@@ -1,0 +1,23 @@
+
+<div class="card" >
+    <div class="card-header">
+        Explore Profiles
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for profile in explore_profiles %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="avatar avatar--small col-auto">
+                    <img src="{{ profile.avatar.url }}" />
+                </div>
+                <div class="col-auto me-auto align-self-center">
+                    <a href="{% url 'profile' profile.id %}" >{{profile.username}}</a>
+                </div>
+                <div class="col-auto align-self-end">
+                    <a class="btn btn-outline-primary" href="{% url 'follow' profile.id %}">Follow</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

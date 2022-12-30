@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-3">
+        {% include 'base/follows.html' %}
+    </div>
+    <div class="col-6">
+        <div class="justify-content-md-center text-center">
+            <h1>Profile</h1>
+            <div class="avatar avatar--large col-auto">
+                <img src="{{ profile.avatar.url }}" />
+            </div>
+            <div>
+                {% if profile.id != request.user.id %}
+                    {% if request.user in followers %}
+                    <a class="btn btn-outline-secondary mt-3 mb-3" href="{% url 'unfollow' profile.id %}">Unfollow</a>
+                    {% else %}
+                    <a class="btn btn-outline-primary mt-3 mb-3" href="{% url 'follow' profile.id %}">Follow</a>
+                    {% endif %}
+                {% else %}
+                    <a class="btn btn-outline-primary mt-3 mb-3" href="{% url 'update-profile' %}">Edit</a>
+                {% endif %}
+                <h5>{{profile.first_name}} {{profile.last_name}} @{{profile.username}}</h5>
+                <p>{{profile.bio}}</p>
+            </div>
+        </div>
+        {% include 'base/feed.html' %}
+    </div>
+    <div class="col-3">
+        {% include 'base/sugestions.html' %}
+    </div>
+</div>
+{% endblock content %}

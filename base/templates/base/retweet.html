@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>ReTweet</h1>
+
+<div>
+    <div class="card">
+        <div class="card-header">
+            <div class="col-auto">
+                IMAGE
+            </div>
+            <div class="col-auto me-auto">
+                <a href="{% url 'profile' retweet.author.id %}" >@{{retweet.author.username}}</a> {{retweet.created|timesince}}
+            </div>
+        </div>
+        <div class="card-body">
+            <p>{{retweet.message}}</p>
+        </div>
+    </div>
+    <form method="POST" action="" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="message" class="form-label">Tweet</label>
+            {{form.message}}
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="topic">Provide a Topic</label>
+            <input required class="form-control" type="text" value="" name="topic" list="topic-list">
+            <datalist id="topic-list">
+                <select id="tweet-topic">
+                    {% for t in topics %}
+                    <option value="{{t.name}}">{{t.name}}</option>
+                    {% endfor %}
+                </select>
+            </datalist>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="image">Image</label>
+            {{form.image}}
+        </div>
+    <input type="submit" value="Tweet" />
+    </form>
+</div>
+
+<script>
+    var message = document.getElementById("id_message")
+    message.classList.add("form-control");
+    message.rows = "3";
+    var image = document.getElementById("id_image")
+    image.classList.add("form-control");
+</script>
+{% endblock content %}

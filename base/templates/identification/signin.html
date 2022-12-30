@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-4">
+        <h4>Sign In</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="id_{{field.label}}" class="form-label">{{field.label}}</label>
+                {{field}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br>
+        <a class="text-center" href="{% url 'login' %}">Already registered? Log In!</a>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById("id_username").classList.add("form-control");
+    document.getElementById("id_email").classList.add("form-control");
+    document.getElementById("id_password1").classList.add("form-control");
+    document.getElementById("id_password2").classList.add("form-control");
+</script>
+
+{% endblock content %}

@@ -1,0 +1,44 @@
+
+{% for tweet in tweets %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="avatar avatar--small col-auto">
+                    <img src="{{ tweet.author.avatar.url }}" />
+                </div>
+                <div class="col-auto me-auto align-self-center">
+                    <a href="{% url 'profile' tweet.author.id %}" >@{{tweet.author.username}}</a> {{tweet.created|timesince}}
+                </div>
+                <div class="col-auto align-self-end">
+                    <a class="btn" href="{% url 'create-retweet' tweet.id %}">Retweet</a>
+                </div>
+                <div class="col-auto align-self-end">
+                    <a href="{% url 'like-tweet' tweet.id %}" class="btn {% if request.user in tweet.likes.all %} btn-outline-primary {% else %} btn-outline-secondary {% endif %}">{{tweet.likes.count}} Like</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p>{{tweet.message}}</p>
+            {% if tweet.image %}
+            <img style="max-width: 100%;" src="{{tweet.image.url}}" />
+            {% endif %}
+            {% if tweet.retweet_attached %}
+                <div class="card">
+                    <div class="card-header">
+                        <a href="{% url 'profile' tweet.author.id %}" >@{{tweet.retweet_attached.author.username}}</a> {{tweet.retweet_attached.created|timesince}}  
+                    </div>
+                    <div class="card-body">
+                        <p>{{tweet.retweet_attached.message}}</p>
+                        {% if tweet.retweet_attached.image %}
+                        <img style="max-width: 100%;" src="{{tweet.retweet_attached.image.url}}" />
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            
+        </div>
+        <div class="card-footer">
+            <small>#{{tweet.topic}}</small>
+        </div>
+    </div>
+{% endfor %}
